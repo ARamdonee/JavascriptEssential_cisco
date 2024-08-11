@@ -64,14 +64,14 @@ the first is the list of contacts, and the second is the index number of the con
   */ 
 
   function showContact(contactList, index){
-    if(!contactList instanceof Array){
+    if(!(contactList instanceof Array)){
         return "array not found!"
     }else if(isNaN(index) || index >= contactList.length || index < 0){
         return "Index not valid" 
     }else{
         let contactobj = contactList[index]; 
         for(let key in contactobj){
-            console.log(`${key} : ${contactobj[key]}`); 
+            alert(`${key} : ${contactobj[key]}`); 
         }
         return contactobj
     }
@@ -82,7 +82,7 @@ inside the function, check if the given argument is an array;
 */
 
 function showAllContacts(contactList){
-        if(!contactList instanceof Array){
+        if(!(contactList instanceof Array)){
         return "array not found!"
         }else{
             for(let elements of contactList){
@@ -122,6 +122,7 @@ function nameValidationInput(name){
         return isValid;
     }
     }
+//phone validation
     function phoneValidationInput(phone){
         let isValid = false; 
         const regex = /^[0-9+\s]+$/;
@@ -205,3 +206,37 @@ function sortContact(contactList, sortBy){
     }
 }
 }
+
+
+function startApp(contactList){
+
+    let action = prompt("Enter add, show contact, show all contact, sort list").toLowerCase();
+
+    switch (action){
+        case "add" : {
+            let newName = prompt("Enter the full name");
+            let newPhone = prompt("Enter your phone number"); 
+            let newEmail = prompt("Enter your email");
+            addNewContact(newName, newPhone, newEmail, contactList);
+            showAllContacts(contactList)
+            break;
+        }
+        case "show contact": {
+            let newIndex = prompt("Enter the index number");
+            showContact(contactList, newIndex);
+            break;
+        }
+        case "show all contact" : {
+            showAllContacts(contactList);
+            break;
+        }
+        case "sort list" : {
+            let contactProperty = prompt("sort by: name, phone or email ?").toLowerCase();
+            sortContact(contactList, contactProperty);
+            showAllContacts(contactList);
+            break;
+        }
+    }
+}
+
+startApp(contacts);
